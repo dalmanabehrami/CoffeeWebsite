@@ -1,0 +1,53 @@
+
+//Tabelat e krijuara ne databaze
+
+CREATE TABLE products(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    description TEXT,
+    price DECIMAL(10, 2),
+    image VARCHAR(255)
+);
+
+CREATE TABLE users (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    name VARCHAR(50),
+    email VARCHAR(100),
+    password VARCHAR(255),
+    reset_token_hash VARCHAR(64),
+    reset_token_expires_at DATETIME,
+    PRIMARY KEY (id),
+    UNIQUE KEY email (email),
+    UNIQUE KEY reset_token_hash (reset_token_hash)
+);
+
+CREATE TABLE orders(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    product_id INT,
+    quantity INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(user_id) REFERENCES users(id),
+    FOREIGN KEY(product_id) REFERENCES products(id)
+);
+CREATE TABLE cart (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    price INT NOT NULL,
+    image VARCHAR(255) NOT NULL
+);
+CREATE TABLE forgot_password_requests (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    request_count INT NOT NULL DEFAULT 1,
+    last_request DATETIME DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(email)
+);
+CREATE TABLE cart_items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cart_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
