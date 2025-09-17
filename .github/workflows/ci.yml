@@ -1,31 +1,41 @@
-name: PHP Selenium CI
+name: PHP CI/CD
 
+# Çfarë e nxit workflow-in
 on:
   push:
-    branches: [ main ]
+    branches: [ main ]  # çdo herë që bësh push në main
   pull_request:
     branches: [ main ]
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
-    services:
-      selenium:
-        image: selenium/standalone-chrome:latest
-        ports:
-          - 4444:4444
-
     steps:
+    # 1. Merre kodin nga repo
     - uses: actions/checkout@v3
 
-    - name: Set up PHP
+    # 2. Setup PHP
+    - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.2'
+        php-version: '8.1'
 
-    - name: Install dependencies
-      run: composer install
+    # 3. Instalimi i dependencies
+    - name: Install Composer dependencies
+      run: composer install --no-progress --no-suggest --prefer-dist
 
-    - name: Run Selenium Register Test
-      run: php tests/SeleniumTests/RegisterTest.php
+    # 4. Run unit tests
+    - name: Run PHPUnit tests
+      run: vendor/bin/phpunit
+
+    # 5. Optional: Lidhja me serverin për deployment
+    - name: Deploy to server (optional)
+      if: github.ref == 'refs/heads/main'
+      uses: easingthemes/ssh-deploy@v2
+      with:
+        ssh-private-key: ${{ secrets.SSH_KEY }}
+        remote-user: your_server_user
+        server-ip: your_server_ip
+        remote-path: /path/to/project/on/server
+        local-path: .
