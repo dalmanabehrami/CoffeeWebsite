@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const taxInfo = document.getElementById("tax-info");
     const orderForm = document.getElementById("order-form");
 
-<<<<<<< HEAD
     // Array për të mbajtur produktet në form JSON
     let cartArray = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -45,8 +44,6 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem('cart', JSON.stringify(cartArray));
     }
 
-=======
->>>>>>> 1a7c1ca9f0d11617aea35361ea25d40795e70aed
     if (productSelect && taxInfo) {
         productSelect.addEventListener("change", () => {
             if (productSelect.value) {
@@ -83,64 +80,31 @@ document.addEventListener("DOMContentLoaded", function () {
             if (isNaN(productQuantity) || productQuantity < 1) {
                 productQuantity = 1;
             }
-<<<<<<< HEAD
-=======
-            console.log("Quantity sent:", productQuantity);
->>>>>>> 1a7c1ca9f0d11617aea35361ea25d40795e70aed
 
             const tax = productPrice * 0.10;
             productPrice += tax;
 
-<<<<<<< HEAD
             // Shto produktin në array
             const existingIndex = cartArray.findIndex(item => item.id == productId);
             if (existingIndex >= 0) {
                 cartArray[existingIndex].quantity += productQuantity;
             } else {
                 cartArray.push({
-=======
-            fetch('admin/cart_actions.php?action=add', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
->>>>>>> 1a7c1ca9f0d11617aea35361ea25d40795e70aed
                     id: productId,
                     name: productName,
                     price: productPrice,
                     quantity: productQuantity,
                     image: productImage
-<<<<<<< HEAD
                 });
             }
 
             updateCartUI();
             addButton.disabled = false;
             showMessage("Product added to cart!", "success");
-=======
-                })
-            })
-            .then(res => res.json())
-            .then(data => {
-                addButton.disabled = false;
-                if (data.status === "success") {
-                    showMessage(data.message, "success");
-                    document.getElementById("cart-items").innerHTML = data.cart_html;
-                    calculateTotal();
-                } else {
-                    showMessage(data.message, "error");
-                }
-            })
-            .catch(err => {
-                addButton.disabled = false;
-                console.error('Error:', err);
-                showMessage("Could not add product to cart.", "error");
-            });
->>>>>>> 1a7c1ca9f0d11617aea35361ea25d40795e70aed
         });
     }
 
     if (orderForm) {
-<<<<<<< HEAD
         // krijo hidden input për cart JSON
         let cartInput = document.createElement("input");
         cartInput.type = "hidden";
@@ -152,12 +116,6 @@ document.addEventListener("DOMContentLoaded", function () {
             e.preventDefault();
 
             cartInput.value = JSON.stringify(cartArray);
-
-=======
-        orderForm.addEventListener("submit", function (e) {
-            e.preventDefault();
-
->>>>>>> 1a7c1ca9f0d11617aea35361ea25d40795e70aed
             const formData = new FormData(orderForm);
             showOrderMessage('<span class="spinner"></span> Sending order...', "info");
 
@@ -171,12 +129,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (data.status === "success") {
                     orderForm.reset();
-<<<<<<< HEAD
                     cartArray = [];
                     updateCartUI();
-=======
-                    document.getElementById("cart-items").innerHTML = "<p>Your cart is empty.</p>";
->>>>>>> 1a7c1ca9f0d11617aea35361ea25d40795e70aed
                     document.getElementById("total-price").textContent = "Total price: $0.00";
                 }
             })
@@ -189,7 +143,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     window.calculateTotal = function () {
         let total = 0;
-<<<<<<< HEAD
         cartArray.forEach(item => {
             total += item.price * item.quantity;
         });
@@ -235,58 +188,6 @@ window.removeFromCart = function (index) {
     }
     document.querySelector('#total-price').textContent = 'Total price: $' + cartArray.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2);
     showMessage("Product removed!", "success");
-=======
-        document.querySelectorAll('.cart-item').forEach(item => {
-            let priceText = item.querySelector('.cart-item-price').textContent;
-            let price = parseFloat(priceText.replace('$', '')) || 0;
-            let quantityInput = item.querySelector('.cart-item-quantity');
-            let quantity = parseInt(quantityInput.value) || 1;
-            total += price * quantity;
-        });
-        document.getElementById('total-price').textContent = 'Total price: $' + total.toFixed(2);
-    }
-});
-
-window.updateQuantity = function (index, newQuantity) {
-    fetch('admin/cart_actions.php?action=update', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ index: index, quantity: parseInt(newQuantity) })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.status === "success") {
-            document.getElementById("cart-items").innerHTML = data.cart_html;
-            calculateTotal();
-        }
-    })
-    .catch(err => {
-        console.error('Error:', err);
-        alert('Could not update quantity.');
-    });
-}
-
-window.removeFromCart = function (index) {
-    fetch('admin/cart_actions.php?action=delete', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ index: index })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.status === "success") {
-            showMessage("Product removed!", "success");
-            document.getElementById("cart-items").innerHTML = data.cart_html;
-            calculateTotal();
-        } else {
-            showMessage(data.message, "error");
-        }
-    })
-    .catch(err => {
-        console.error('Error:', err);
-        showMessage("Could not remove product.", "error");
-    });
->>>>>>> 1a7c1ca9f0d11617aea35361ea25d40795e70aed
 }
 
 function showMessage(msg, type = "success") {
@@ -333,8 +234,4 @@ function showOrderMessage(msg, type = "success") {
             messageBox.innerHTML = "";
         }, 4000);
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 1a7c1ca9f0d11617aea35361ea25d40795e70aed
