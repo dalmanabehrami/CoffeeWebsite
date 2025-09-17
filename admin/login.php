@@ -1,5 +1,8 @@
 <?php
+<<<<<<< HEAD
 session_start();
+=======
+>>>>>>> 1a7c1ca9f0d11617aea35361ea25d40795e70aed
 include '../includes/header.php';
 include '../database/db_connection.php';
 
@@ -7,8 +10,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
+<<<<<<< HEAD
     // Merr edhe fushën role nga DB
     $query = "SELECT id, name, password, role FROM users WHERE email = ?";
+=======
+    $query = "SELECT id, name, password FROM users WHERE email = ?";
+>>>>>>> 1a7c1ca9f0d11617aea35361ea25d40795e70aed
     $stmt = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($stmt, 's', $email);
     mysqli_stmt_execute($stmt);
@@ -16,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     if ($row = mysqli_fetch_assoc($result)) {
         if (password_verify($password, $row['password'])) {
+<<<<<<< HEAD
             // Ruaj të dhënat në session
             $_SESSION['user_id'] = $row['id'];
             $_SESSION['user_name'] = $row['name'];
@@ -23,6 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['logged_in'] = true;
 
             // Cookie për herën e parë
+=======
+            $_SESSION['user_id'] = $row['id'];
+            $_SESSION['user_name'] = $row['name'];
+            $_SESSION['logged_in'] = true;
+            
+>>>>>>> 1a7c1ca9f0d11617aea35361ea25d40795e70aed
             $cookieName = 'first_login_' . date('Y-m-d') . '_' . $row['id'];
             if (!isset($_COOKIE[$cookieName])) {
                 setcookie($cookieName, '1', strtotime('tomorrow 00:00:00'), "/");
@@ -31,12 +45,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['show_welcome'] = false;
             }
 
+<<<<<<< HEAD
             // Redirect bazuar në rol
             if ($row['role'] === 'admin') {
                 header("Location: ../admin/dashboard.php"); // faqja kryesore e adminit
             } else {
                 header("Location: ../index.php"); // faqja kryesore për user
             }
+=======
+            header("Location: ../index.php");
+>>>>>>> 1a7c1ca9f0d11617aea35361ea25d40795e70aed
             exit();
         } else {
             $error = "Password incorrect!";
@@ -70,4 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 </div>
 
+<<<<<<< HEAD
 <?php include '../includes/footer.php'; ?>
+=======
+<?php include '../includes/footer.php'; ?>
+>>>>>>> 1a7c1ca9f0d11617aea35361ea25d40795e70aed

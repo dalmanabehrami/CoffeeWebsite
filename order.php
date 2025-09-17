@@ -3,7 +3,10 @@ session_start();
 include 'includes/header.php'; 
 include 'database/db_connection.php'; 
 
+<<<<<<< HEAD
 // Llogarit totalin aktual nga cart
+=======
+>>>>>>> 1a7c1ca9f0d11617aea35361ea25d40795e70aed
 $total = 0;
 if (!empty($_SESSION['cart'])) {
     foreach ($_SESSION['cart'] as $item) {
@@ -13,6 +16,7 @@ if (!empty($_SESSION['cart'])) {
         $total += $subtotal;
     }
 }
+<<<<<<< HEAD
 
 // Shto logjikën për të ruajtur porositë në DB kur dorëzohet forma
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cart'])) {
@@ -52,3 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cart'])) {
 <script src="assets/js/order_process.js"></script>
 <?php include 'includes/footer.php'; ?>
 
+=======
+?>
+<?php include 'includes/order_content.php';?>
+<script src="assets/js/order_process.js"></script>
+<?php include 'includes/footer.php'; ?>
+>>>>>>> 1a7c1ca9f0d11617aea35361ea25d40795e70aed

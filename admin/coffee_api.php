@@ -15,4 +15,8 @@ echo '<div style="text-align: center; margin: 200px auto 20px auto; padding: 15p
 echo "<h3 style='color: #ff8c00;'>☕ Fun Fact about Coffee ☕</h3>";
 echo "<p style='font-size: 1.2em;'><strong>" . htmlspecialchars($fact) . "</strong></p>";
 echo "</div>";
+<<<<<<< HEAD
 ?>
+=======
+?>
+>>>>>>> 1a7c1ca9f0d11617aea35361ea25d40795e70aed

@@ -11,9 +11,12 @@
         <h1>Order Now!</h1>
 
         <form id="order-form">
+<<<<<<< HEAD
             <!-- Hidden field to send cart JSON -->
             <input type="hidden" name="cart" id="cart-json">
 
+=======
+>>>>>>> 1a7c1ca9f0d11617aea35361ea25d40795e70aed
             <div id="message-box" style="margin: 10px auto; max-width: 480px;"></div>
 
             <div class="form-group">
@@ -108,4 +111,8 @@
             </div>
         </form>
     </div>
+<<<<<<< HEAD
 </section>
+=======
+</section>
+>>>>>>> 1a7c1ca9f0d11617aea35361ea25d40795e70aed
