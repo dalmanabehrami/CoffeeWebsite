@@ -1,0 +1,6 @@
+{
+    "require": {
+        "php": "^8.0",
+        "php-webdriver/webdriver": "^1.12"
+    }
+}
