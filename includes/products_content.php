@@ -1,10 +1,7 @@
 <?php
-<<<<<<< HEAD
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-=======
->>>>>>> 1a7c1ca9f0d11617aea35361ea25d40795e70aed
 include 'database/db_connection.php';
 
 $sql = "SELECT * FROM products";
@@ -16,7 +13,6 @@ $result = $conn->query($sql);
         <?php
         if ($result && $result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-<<<<<<< HEAD
                 // Merr çdo fushë në mënyrë të sigurt
                 $id = array_key_exists('id', $row) ? $row['id'] : null;
                 $name = array_key_exists('name', $row) ? htmlspecialchars($row['name']) : 'No name';
@@ -27,13 +23,10 @@ $result = $conn->query($sql);
                     // Pa id nuk ka kuptim të shfaqet produkti, kalojmë
                     continue;
                 }
-=======
                 $id = $row['id'];
                 $name = htmlspecialchars($row['name']);
                 $price = number_format($row['price'], 2);
                 $image = htmlspecialchars($row['image']);
->>>>>>> 1a7c1ca9f0d11617aea35361ea25d40795e70aed
-
                 if (!str_starts_with($image, 'assets/images/') && !str_starts_with($image, 'http')) {
                     $image = 'assets/images/' . ltrim($image, '/');
                 }
@@ -58,8 +51,4 @@ $result = $conn->query($sql);
         }
         ?>
     </div>
-<<<<<<< HEAD
 </section>
-=======
-</section>
->>>>>>> 1a7c1ca9f0d11617aea35361ea25d40795e70aed
