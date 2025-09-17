@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 document.addEventListener("DOMContentLoaded", function () {
     const productSelect = document.getElementById("product");
     const addButton = document.getElementById("btn-add-to-cart");
@@ -79,39 +78,44 @@ document.addEventListener("DOMContentLoaded", function () {
         orderForm.addEventListener("submit", function (e) {
             e.preventDefault();
 
-            // Fill hidden cart JSON field
-            const cartItems = [];
-            document.querySelectorAll('.cart-item').forEach(item => {
-                const index = item.dataset.index;
-                const name = item.querySelector('.cart-item-name').textContent;
-                const price = parseFloat(item.querySelector('.cart-item-price').textContent.replace('$',''));
-                const quantity = parseInt(item.querySelector('.cart-item-quantity').value) || 1;
-                const img = item.querySelector('img').src;
-                cartItems.push({ index, name, price, quantity, image: img });
-            });
-            cartJsonInput.value = JSON.stringify(cartItems);
+            try {
+                kontrolloPorosine(); // Validimi i porosisë
 
-            const formData = new FormData(orderForm);
-            showOrderMessage('<span class="spinner"></span> Sending order...', "info");
+                // Fill hidden cart JSON field
+                const cartItems = [];
+                document.querySelectorAll('.cart-item').forEach(item => {
+                    const index = item.dataset.index;
+                    const name = item.querySelector('.cart-item-name').textContent;
+                    const price = parseFloat(item.querySelector('.cart-item-price').textContent.replace('$',''));
+                    const quantity = parseInt(item.querySelector('.cart-item-quantity').value) || 1;
+                    const img = item.querySelector('img').src;
+                    cartItems.push({ index, name, price, quantity, image: img });
+                });
+                cartJsonInput.value = JSON.stringify(cartItems);
 
-            fetch("admin/process_order.php", {
-                method: "POST",
-                body: formData
-            })
-            .then(res => res.json())
-            .then(data => {
-                showOrderMessage(data.message, data.status);
+                const formData = new FormData(orderForm);
+                showOrderMessage('<span class="spinner"></span> Sending order...', "info");
 
-                if (data.status === "success") {
-                    orderForm.reset();
-                    document.getElementById("cart-items").innerHTML = "<p>Your cart is empty.</p>";
-                    document.getElementById("total-price").textContent = "Total price: $0.00";
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                showOrderMessage("Failed to place order. Please try again.", "error");
-            });
+                fetch("admin/process_order.php", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(res => res.json())
+                .then(data => {
+                    showOrderMessage(data.message, data.status);
+                    if (data.status === "success") {
+                        orderForm.reset();
+                        document.getElementById("cart-items").innerHTML = "<p>Your cart is empty.</p>";
+                        document.getElementById("total-price").textContent = "Total price: $0.00";
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    showOrderMessage("Failed to place order. Please try again.", "error");
+                });
+            } catch (error) {
+                showOrderMessage(`Error: ${error}`, "error");
+            }
         });
     }
 
@@ -173,7 +177,6 @@ document.addEventListener("DOMContentLoaded", function () {
         box.className = type;
         box.textContent = msg;
         document.querySelector(".container").prepend(box);
-
         setTimeout(() => box.remove(), 3000);
     }
 
@@ -197,18 +200,16 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
         if (type !== "info") setTimeout(() => messageBox.innerHTML = "", 4000);
     }
-});
-=======
-function kontrolloPorosine() {
-    try {
+
+    // Order validation functions
+    function kontrolloPorosine() {
         let name = document.getElementById("name").value;
         let email = document.getElementById("email").value;
         let address = document.getElementById("address").value;
         let product = document.getElementById("product").value;
         let payment = document.getElementById("payment-method").value;
         let isChecked = document.getElementById("accept-terms").checked;
-        let quantity = document.getElementById("product-suggestion").value;
-
+        let quantity = document.getElementById("product-quantity").value;
 
         validateName(name);
         validateEmail(email);
@@ -218,71 +219,22 @@ function kontrolloPorosine() {
         if (!product) throw "Please select a product!";
         if (!payment) throw "Please select a payment method!";
         if (!isChecked) throw "You must accept the terms and conditions!";
-
-        let currentDate = new Date();
-        let currentYear = currentDate.getFullYear();
-        let dateString = `Order date: ${currentDate.toLocaleString()}`;
-        console.log(dateString);
-
-        let maxPayment = 999999.99;
-        let minPayment = 0.01;
-        console.log(`Maximum payment value: ${maxPayment.toExponential()}`);
-        console.log(`Minimum payment value: ${minPayment.toString()}`);
-        console.log(`Payment value: ${payment}`);
-        console.log(`Payment value is NaN: ${isNaN(payment)}`);
-
-       
-
-        setTimeout(function() {
-            alert("Order submitted successfully!");
-        }, 3000);
-    } catch (error) {
-        alert(`Error: ${error}`);
     }
-}
-function validateQuantity(quantity) {
-    if (!quantity || quantity <= 0) {
-        throw "Please enter a valid quantity!";
+
+    function validateQuantity(quantity) {
+        if (!quantity || quantity <= 0) throw "Please enter a valid quantity!";
     }
-}
-function validateName(name) {
-    if (!name) throw "Name is required!";
-}
 
-function validateEmail(email) {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(email)) throw "Email is not valid!";
-}
+    function validateName(name) {
+        if (!name) throw "Name is required!";
+    }
 
-function validateAddress(address) {
-    if (!address) throw "Address is required!";
-}
+    function validateEmail(email) {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) throw "Email is not valid!";
+    }
 
-function Product(name, price) {
-    this.name = name;
-    this.price = price;
-    this.displayInfo = function() {
-        return `Product: ${this.name}, Price: ${this.price}`;
-    };
-}
-
-let product1 = new Product("Americano", 10);
-let product2 = new Product("Esspreso", 25);
-let product3 = new Product("Makiato", 20);
-
-console.log(product1.displayInfo());
-console.log(product2.displayInfo());
-console.log(product3.displayInfo());
-
-
-let emailExample = "arila@example.com";
-let emailMatch = emailExample.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
-if (emailMatch) {
-    console.log("Email is valid");
-} else {
-    console.log("Email is invalid");
-}
-
-let updatedEmail = emailExample.replace("example.com", "gmail.com");
-console.log(`Updated email: ${updatedEmail}`);
->>>>>>> 1a7c1ca9f0d11617aea35361ea25d40795e70aed
+    function validateAddress(address) {
+        if (!address) throw "Address is required!";
+    }
+});
