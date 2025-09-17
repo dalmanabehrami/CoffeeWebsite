@@ -1,14 +1,10 @@
 {
     "require": {
-<<<<<<< HEAD
         "phpmailer/phpmailer": "^6.10",
-        "php-webdriver/webdriver": "^1.15"
+        "php-webdriver/webdriver": "^1.15",
+        "php": "^8.0"
     },
     "require-dev": {
         "phpunit/phpunit": "10"
-=======
-        "php": "^8.0",
-        "php-webdriver/webdriver": "^1.12"
->>>>>>> 1a7c1ca9f0d11617aea35361ea25d40795e70aed
     }
 }
