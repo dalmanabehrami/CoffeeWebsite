@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="vendor/autoload.php" colors="true">
+    <testsuites>
+        <testsuite name="CRUD Tests">
+            <directory>./tests_crud</directory>
+        </testsuite>
+        <testsuite name="Selenium Tests">
+            <directory>./tests/SeleniumTests</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
