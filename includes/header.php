@@ -3,11 +3,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 $currentPage = basename($_SERVER['PHP_SELF']);
-<<<<<<< HEAD
 $base_url = 'http://' . $_SERVER['HTTP_HOST'] . '/UEB25_CoffeeWebsite_/';
-=======
-$base_url = 'http://' . $_SERVER['HTTP_HOST'] . '/CoffeeWebsite/';
->>>>>>> 1a7c1ca9f0d11617aea35361ea25d40795e70aed
 ?> 
 <html lang="en">
 <head>
@@ -59,3 +55,4 @@ $base_url = 'http://' . $_SERVER['HTTP_HOST'] . '/CoffeeWebsite/';
         </div>
         
     </header> 
+</body>
